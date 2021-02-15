@@ -37,6 +37,11 @@ class MessageController extends Controller
                 $message = new Message;
                 $message->message = $request->message;
                 $message->save();
+
+                return response().json($message);
+            }
+            else {
+                return response().json('Invalid request', 400);
             }
         }
         catch(Exception $e) {
