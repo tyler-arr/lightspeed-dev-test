@@ -2,19 +2,20 @@
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 class GetMessageTest extends TestCase
 {
     /**
-     * A basic unit test example.
+     * A basic feature test example.
      *
      * @return void
      */
     public function test_example()
     {
-        $message = DB::table('messages')->where('id', 1)->get();
-        print_r($message);
+        $response = $this->get('/api/message/1');
+        $response->assertStatus(200);
     }
 }

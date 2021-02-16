@@ -2,9 +2,12 @@
 
 namespace Tests\Unit;
 
-use PHPUnit\Framework\TestCase;
-use App\Models\Message;
 use DateTime;
+use App\Models\Message;
+use Illuminate\Support\Str;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\WithFaker;
+use Tests\TestCase;
 
 class InsertMessageTest extends TestCase
 {
@@ -15,10 +18,12 @@ class InsertMessageTest extends TestCase
      */
     public function test_example()
     {
-        $message = new Message();
-        $message->message = "Test Message " .(new DateTime())->getTimestamp();
-        $message->save();
 
-       // $this->assertTrue(true);
+        $data = [
+            'message' => "Unit Test Case: " .Str::random(25)
+        ];
+
+        $response = $this->post('/api/message', $data);
+        $response->assertStatus(201);
     }
 }
