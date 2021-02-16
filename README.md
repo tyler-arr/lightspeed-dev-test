@@ -1,6 +1,6 @@
 ## Lightspeed Development Exercise
 **Authour:** Tyler Roach
-**Date:** February 16, 2021
+**Date:** February 15, 2021
 
 **Installation:**
 1. Extract application files to web root
