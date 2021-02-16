@@ -14,7 +14,7 @@
 - Check for a string that is a palindrome
 - Check for a string that is **not** a palindrome
 
-## Key Code Files/Directoros
+## Key Code Files/Directories
 - app/Http/Controllers/MessageController.php
 - routes/api.php
 - tests/unit/
