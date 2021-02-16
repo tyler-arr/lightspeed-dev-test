@@ -2,70 +2,79 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class MessageController extends Controller
 {
     /**
+     * Return a message based on a provided message Id
+     * 
      * params Request $request
      * 
      * return Response
      */
-    public function get(Request $request) : Response {
+    public static function get(Request $request) : Response {
         try {
-            $message = \DB::select('messages')->where('id', $request->id);
+            $message = \DB::table('messages')->where('id', $request->id)->get();
 
             if(!$message) {
-                return response().json('Message not found', 404);
+                return response('Message not found', 404);
             }
 
-            return response().json($message);
+            return response(json_encode($message));
         }
         catch(Exception $e) {
-            return response().json('Error fetching message', 500);
+            return response('Error fetching message', 500);
         }
     }
 
     /**
+     * Save a message to the database
+     * 
      * params Request $request
      * 
      * return Response
      */
-    public function post(Request $request) : Response {
+    public static function insert(Request $request) : Response {
         try {
             if(isset($request->message)) {
-                $message = new Message;
+                $message = new Message();
                 $message->message = $request->message;
                 $message->save();
 
-                return response().json($message);
+                return response(json_encode($message), 201);
             }
             else {
-                return response().json('Invalid request', 400);
+                return response('Invalid request', 400);
             }
         }
         catch(Exception $e) {
-            return response().json('Error saving message', 500);
+            return response('Error saving message', 500);
         }
     }
 
     /**
+     * Check whether a provided message string is a palindrome
+     * 
      * params Request $request
      * 
      * return Response
      */
-    public function isPalandrome(Request $request) : Response {
+    public static function isPalindrome(Request $request) : Response {
         try {
             if(isset($request->message)) {
                 $reverse = strrev($request->message);
                 if($request->message === $reverse) {
-                    return response().json(true);
+                    return response(json_encode(['isPalindrome' => true]));
                 }
             }
-            return response().json(false);
+            return response(json_encode(['isPalindrome' => false]));
         }
         catch(Exception $e) {
-            return response().json('Error checking for palindrome', 500);
+            return response('Error checking for palindrome', 500);
         }
     }
 }
