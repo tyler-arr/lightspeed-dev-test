@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MessageController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,4 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+Route::get('/message/{id}', [MessageController::class, 'get']);
+Route::post('/message', [MessageController::class, 'insert']);
+Route::get('/message/palindrome/{message}', [MessageController::class, 'isPalindrome']);
